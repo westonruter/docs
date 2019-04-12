@@ -18,10 +18,14 @@ function setNoCache(response) {
   response.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 }
 
-function setMaxAge(response, maxAge) {
+function setMaxAge(response, maxAge, ...flags) {
+  let flagsString = '';
+  if (flags.length > 0) {
+    flagsString = ', ' + flags.join(', ');
+  }
   response.setHeader(
       'Cache-Control',
-      `public, max-age=${maxAge}, stale-while-revalidate=${Math.floor(maxAge * 2)}`,
+      `public, max-age=${maxAge}, stale-while-revalidate=${Math.floor(maxAge * 2)}${flagsString}`,
   );
 }
 

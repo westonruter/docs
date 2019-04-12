@@ -22,6 +22,7 @@ const {join} = require('path');
 const {readFileSync} = require('fs');
 const notFound = require('./notFound.js');
 const URL = require('url').URL;
+const {setMaxAge} = require('../utils/cacheHelpers.js');
 
 const GO_LINKS_DEFINITION = join(__dirname, '../../config/go-links.yaml');
 
@@ -38,8 +39,8 @@ go.use((request, response, next) => {
   }
   try {
     const targetUrl = new URL(target, config.hosts.platform.base);
+    setMaxAge(response, 60 * 30, 'must-revalidate'); // 30 min
     response.redirect(targetUrl.toString());
-    return;
   } catch (error) {
     console.log(error);
     notFound(request, response, next);
