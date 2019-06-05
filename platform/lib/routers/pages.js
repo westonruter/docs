@@ -56,7 +56,7 @@ function ensureFileExtension(path) {
     return path += 'index.html';
   }
 
-  if (!path.endsWith('.html')) {
+  if (!path.endsWith('.html') && !path.endsWith('.xml')) {
     return path += '.html';
   }
 
